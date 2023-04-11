@@ -1,5 +1,6 @@
-package com.example.demo.restservice;
+package com.example.demo.api.Controllers;
 
+import com.example.demo.api.Greetings;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
