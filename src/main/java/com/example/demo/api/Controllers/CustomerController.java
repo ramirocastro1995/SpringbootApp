@@ -1,17 +1,21 @@
 package com.example.demo.api.Controllers;
 
+
 import com.example.demo.api.Model.Customer;
 import com.example.demo.api.Repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping(path="/customers")
 public class CustomerController {
+    @Autowired(required = false)
     private CustomerRepository customerRepository;
     //Create new customer
-    @GetMapping("/add")
+    @PostMapping(path="/add")
     public Customer addNewCustomer(@RequestBody Customer newCustomer){
         Customer user = new Customer();
         user.setName(newCustomer.getName());
@@ -20,23 +24,24 @@ public class CustomerController {
         return user;
     }
     //view all customers
-    @GetMapping("view/all")
+    @GetMapping(path="view/all")
     public @ResponseBody Iterable<Customer> getAllCustomers(){
         return customerRepository.findAll();
     }
     //view specific customer
-    @GetMapping("view/{id}")
+    @GetMapping(path="view/{id}")
     public Optional<Customer> getCustomer(@PathVariable Integer id){
         return customerRepository.findById(id);
     }
     //update an existing customer
-    @PutMapping("edit/{id}")
+    @PutMapping(path="/edit/{id}")
     public String update(@RequestBody Customer updateCustomer,@PathVariable Integer id){
         return customerRepository.findById(id)
                 .map(customer ->{
                     customer.setName(updateCustomer.getName());
                     customer.setEmail(updateCustomer.getEmail());
                     customerRepository.save(customer);
+                    return "Customer has been successfully updated";
                 }).orElseGet(()->{
                     return "this customer doesn't exist";
                 });

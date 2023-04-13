@@ -2,14 +2,15 @@ package com.example.demo.api.Model;
 
 import jakarta.persistence.*;
 
-@Table (name = "customer")
 @Entity
+@Table (name = "customer")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     @Column(name="customername")
     private String name;
+    @Column(name="email")
     private String email;
 
     public Integer getId() {
